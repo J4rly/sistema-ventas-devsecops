@@ -8,23 +8,23 @@ app = FastAPI(
     ## Bienvenida al Portal de Inventarios
     Este sistema gestiona el flujo de productos con **Seguridad DevSecOps** integrada.
     
-    * **Protección**: Código validado contra vulnerabilidades.
-    * **Automatización**: Despliegue continuo mediante contenedores Docker.
+    * **Protección🛡️**: Código validado contra vulnerabilidades.
+    * **Automatización📦**: Despliegue continuo mediante contenedores Docker.
     """,
     version="2.0.0",
     contact={
         "name": "Jorly - Lead DevOps Engineer",
         "url": "https://github.com/J4rly",
     }
-) # <--- EL PARÉNTESIS DEBE CERRAR AQUÍ
+)
 
 @app.get("/", tags=["Estado"])
 def root():
     """Confirma el estado operativo del núcleo del sistema."""
     return {
-        "status": "ONLINE ",
-        "entorno": "Docker Container ",
-        "seguridad": "Bandit Verified ",
+        "status": "ONLINE ✅",
+        "entorno": "Docker Container 🐳",
+        "seguridad": "Bandit Verified 🛡️",
         "mensaje": "Bienvenido al núcleo del Sistema de Ventas"
     }
 
@@ -45,4 +45,3 @@ def create_product(product: ProductCreate):
 def read_products():
     """Obtiene la lista completa de productos registrados."""
     return crud.get_products()
-)
