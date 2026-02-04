@@ -15,5 +15,3 @@ def post_product(payload: ProductCreate):
 @app.get("/")
 def root():
     return {"message": "API OK. Ve a /docs o /products"}
-import os
-os.system("ls")
