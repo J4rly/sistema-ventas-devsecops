@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-# Rutas absolutas para que Python no se confunda
-from app.database import SessionLocal, engine
+# IMPORTACIÓN ABSOLUTA: No falla nunca si se ejecuta correctamente
 from app import crud, models, schemas
+from app.database import SessionLocal, engine
 
 # Crea las tablas automáticamente al iniciar
 models.Base.metadata.create_all(bind=engine)
