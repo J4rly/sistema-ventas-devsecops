@@ -36,6 +36,16 @@ def verificar_stock_bajo():
         {"producto": "Monitor 4K", "stock": 5, "accion": "VIGILAR"}
     ]
 
+@app.get("/ventas-recientes", tags=["Reportes"])
+def obtener_ventas_hoy():
+    """Muestra un reporte resumido de las transacciones del día."""
+    return [
+        {"id_factura": "F-001", "cliente": "Juan Perez", "total": 150.50, "estado": "Pagado"},
+        {"id_factura": "F-002", "cliente": "Maria Lopez", "total": 89.99, "estado": "Pendiente"},
+        {"id_factura": "F-003", "cliente": "Carlos Ruiz", "total": 1200.00, "estado": "Pagado"}
+    ]
+
+
 @app.post("/products/", response_model=ProductOut, tags=["Ventas"])
 def create_product(product: ProductCreate):
     """Registra un nuevo producto en el sistema de ventas."""
