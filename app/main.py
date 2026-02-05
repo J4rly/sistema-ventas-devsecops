@@ -3,13 +3,13 @@ from app.schemas import ProductCreate, ProductOut
 from app import crud
 
 app = FastAPI(
-    title="🚀 Sistema de Ventas Pro - J4rly Corp",
+    title="🚀 Sistema de Ventas Pro - J4rly and Darly Corp",
     description="""
     ## Bienvenida al Portal de Inventarios
     Este sistema gestiona el flujo de productos con **Seguridad DevSecOps** integrada.
     
-    * **Protección🛡️**: Código validado contra vulnerabilidades.
-    * **Automatización📦**: Despliegue continuo mediante contenedores Docker.
+    * **Protección**: Código validado contra vulnerabilidades.
+    * **Automatización**: Despliegue continuo mediante contenedores Docker.
     """,
     version="2.0.0",
     contact={
@@ -23,8 +23,8 @@ def root():
     """Confirma el estado operativo del núcleo del sistema."""
     return {
         "status": "ONLINE ✅",
-        "entorno": "Docker Container 🐳",
-        "seguridad": "Bandit Verified 🛡️",
+        "entorno": "Docker Container ",
+        "seguridad": "Bandit Verified ",
         "mensaje": "Bienvenido al núcleo del Sistema de Ventas"
     }
 
