@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.schemas import ProductCreate, ProductOut
 from app import crud
+from app.db import SessionLocal, engine
 
 app = FastAPI(
     title="🚀 Sistema de Ventas Pro - J4rly Corp",
