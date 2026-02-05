@@ -1,15 +1,15 @@
 from fastapi import FastAPI
-# Importamos schemas y crud para mantener la lógica organizada
+# Importaciones limpias sin dependencias de base de datos
 from app import schemas, crud
 
 app = FastAPI(
-    title="🚀 Sistema de Ventas Pro - J4rly Corp",
+    title=" Sistema de Ventas Pro - J4rly Corp",
     description="""
     ## Bienvenida al Portal de Inventarios
     Este sistema gestiona el flujo de productos con **Seguridad DevSecOps** integrada.
     
-    * **Protección🛡️**: Código validado contra vulnerabilidades.
-    * **Automatización📦**: Despliegue continuo mediante contenedores Docker.
+    * **Protección**: Código validado contra vulnerabilidades.
+    * **Automatización**: Despliegue continuo mediante contenedores Docker.
     """,
     version="2.0.0",
     contact={
@@ -22,9 +22,9 @@ app = FastAPI(
 def root():
     """Confirma el estado operativo del núcleo del sistema."""
     return {
-        "status": "ONLINE ✅",
-        "entorno": "Entorno Local 💻",
-        "seguridad": "Bandit Verified 🛡️",
+        "status": "ONLINE ",
+        "entorno": "Memoria Volátil ",
+        "seguridad": "Bandit Verified ",
         "mensaje": "Bienvenido al núcleo del Sistema de Ventas"
     }
 
