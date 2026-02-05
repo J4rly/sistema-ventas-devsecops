@@ -1,63 +1,55 @@
-from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
-# IMPORTACIÓN ABSOLUTA: No falla nunca si se ejecuta correctamente
-from app import crud, models, schemas
-from app.database import SessionLocal, engine
-
-# Crea las tablas automáticamente al iniciar
-models.Base.metadata.create_all(bind=engine)
-
+from fastapi import FastAPI
+from app.schemas import ProductCreate, ProductOut
+from app import crud
 
 app = FastAPI(
     title="🚀 Sistema de Ventas Pro - J4rly Corp",
     description="""
-    ## Bienvenida al Portal de Inventarios Real
-    Este sistema gestiona productos con **Persistencia de Datos** y seguridad verificada.
+    ## Bienvenida al Portal de Inventarios
+    Este sistema gestiona el flujo de productos con **Seguridad DevSecOps** integrada.
     
-    * **Seguridad🛡️**: Escaneado por Bandit.
-    * **Infraestructura🐳**: Desplegado en Docker.
-    * **Almacenamiento💾**: SQLite Database activo.
+    * **Protección🛡️**: Código validado contra vulnerabilidades.
+    * **Automatización📦**: Despliegue continuo mediante contenedores Docker.
     """,
-    version="3.1.0",
+    version="2.0.0",
     contact={
         "name": "Jorly - Lead DevOps Engineer",
         "url": "https://github.com/J4rly",
     }
 )
 
-# Dependencia para la base de datos
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 @app.get("/", tags=["Estado"])
 def root():
-    """Confirma el estado operativo del núcleo y la base de datos."""
+    """Confirma el estado operativo del núcleo del sistema."""
     return {
         "status": "ONLINE ✅",
-        "base_de_datos": "CONECTADA 🗄️",
         "entorno": "Docker Container 🐳",
+        "seguridad": "Bandit Verified 🛡️",
         "mensaje": "Bienvenido al núcleo del Sistema de Ventas"
     }
 
 @app.get("/alerta-stock", tags=["Inventario"])
 def verificar_stock_bajo():
-    """Ejemplo práctico: Consulta de productos que necesitan reabastecimiento."""
+    """Consulta simulada de productos con stock crítico."""
     return [
         {"producto": "Laptop Gaming", "stock": 2, "accion": "PEDIR URGENTE"},
         {"producto": "Monitor 4K", "stock": 5, "accion": "VIGILAR"}
     ]
 
-# CORRECCIÓN AQUÍ: Usamos schemas.ProductOut y crud.create_product
-@app.post("/products/", response_model=schemas.ProductOut, tags=["Ventas"])
-def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db)):
-    """Guarda un producto de forma PERMANENTE en la base de datos."""
-    return crud.create_product(db=db, product=product)
+@app.get("/ventas-recientes", tags=["Reportes"])
+def obtener_ventas_hoy():
+    """Reporte resumido de las transacciones del día."""
+    return [
+        {"id_factura": "F-001", "cliente": "Juan Perez", "total": 150.50, "estado": "Pagado"},
+        {"id_factura": "F-003", "cliente": "Carlos Ruiz", "total": 1200.00, "estado": "Pagado"}
+    ]
 
-@app.get("/products/", response_model=list[schemas.ProductOut], tags=["Ventas"])
-def read_products(db: Session = Depends(get_db)):
-    """Obtiene la lista de productos reales guardados en el disco duro."""
-    return crud.get_products(db=db)
+@app.post("/products/", response_model=ProductOut, tags=["Ventas"])
+def create_product(product: ProductCreate):
+    """Registra un nuevo producto en la memoria temporal."""
+    return crud.create_product(product)
+
+@app.get("/products/", response_model=list[ProductOut], tags=["Ventas"])
+def read_products():
+    """Obtiene la lista de productos registrados en la sesión actual."""
+    return crud.get_products()
