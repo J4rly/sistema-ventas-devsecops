@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from app.schemas import ProductCreate, ProductOut
-from app import crud, models
+from . import crud, models, schemas  # El punto (.) le dice que busque en la misma carpeta
+from .database import SessionLocal, engine
 from app.database import SessionLocal, engine
 
 # Crea las tablas en el archivo de base de datos automáticamente al iniciar
