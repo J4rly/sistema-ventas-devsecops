@@ -1,36 +1,18 @@
-from app.db import get_connection
+# Lista temporal que vive solo mientras el servidor esté encendido
+products_db = []
 
-def create_product(name: str, price: float, discount_percent: float = 0) -> dict:
-    with get_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO product(name, price, discount_percent)
-                VALUES (%s, %s, %s)
-                RETURNING id, name, price, discount_percent
-                """,
-                (name, price, discount_percent)
-            )
-            row = cur.fetchone()
-            conn.commit()
-    return {
-        "id": row[0],
-        "name": row[1],
-        "price": float(row[2]),
-        "discount_percent": float(row[3])
+def get_products():
+    """Retorna la lista de productos guardados en memoria."""
+    return products_db
+
+def create_product(product):
+    """Registra un nuevo producto en la lista temporal."""
+    # Creamos un diccionario con los datos del producto
+    new_product = {
+        "id": len(products_db) + 1,
+        "name": product.name,
+        "price": product.price,
+        "stock": product.stock
     }
-
-def list_products() -> list[dict]:
-    with get_connection() as conn:
-        with conn.cursor() as cur:
-            cur.execute("SELECT id, name, price, discount_percent FROM product ORDER BY id")
-            rows = cur.fetchall()
-    return [
-        {
-            "id": r[0],
-            "name": r[1],
-            "price": float(r[2]),
-            "discount_percent": float(r[3])
-        }
-        for r in rows
-    ]
+    products_db.append(new_product)
+    return new_product
