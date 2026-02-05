@@ -1,13 +1,12 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-# Usamos rutas absolutas para que uvicorn no se pierda
-import app.crud as crud
-import app.models as models
-import app.schemas as schemas
-from app.database import SessionLocal, engine
+# Importaciones directas y seguras
+from .database import SessionLocal, engine
+from . import crud, models, schemas
 
-# Crea las tablas automáticamente al iniciar usando el objeto models
+# Crea las tablas automáticamente al iniciar
 models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI(
     title="🚀 Sistema de Ventas Pro - J4rly Corp",
