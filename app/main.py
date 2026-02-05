@@ -1,10 +1,12 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-# Importaciones corregidas para evitar errores de módulo
-from app import crud, models, schemas
+# Usamos rutas absolutas para que uvicorn no se pierda
+import app.crud as crud
+import app.models as models
+import app.schemas as schemas
 from app.database import SessionLocal, engine
 
-# Crea las tablas automáticamente al iniciar
+# Crea las tablas automáticamente al iniciar usando el objeto models
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -50,6 +52,7 @@ def verificar_stock_bajo():
         {"producto": "Monitor 4K", "stock": 5, "accion": "VIGILAR"}
     ]
 
+# CORRECCIÓN AQUÍ: Usamos schemas.ProductOut y crud.create_product
 @app.post("/products/", response_model=schemas.ProductOut, tags=["Ventas"])
 def create_product(product: schemas.ProductCreate, db: Session = Depends(get_db)):
     """Guarda un producto de forma PERMANENTE en la base de datos."""
