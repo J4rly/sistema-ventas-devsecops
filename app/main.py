@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-# Importaciones directas y seguras
-from .database import SessionLocal, engine
+# IMPORTACIONES CORRECTAS CON PUNTO (.)
 from . import crud, models, schemas
+from .database import SessionLocal, engine
 
 # Crea las tablas automáticamente al iniciar
 models.Base.metadata.create_all(bind=engine)
