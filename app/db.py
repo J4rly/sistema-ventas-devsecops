@@ -1,16 +1,16 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from fastapi import FastAPI
+from app import schemas, crud
 
-# URL para MySQL (Usaremos pymysql como el "traductor")
-# root:password es el ejemplo, cámbialo si tu servidor tiene otros datos
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:password@localhost:3306/ventas_db"
+app = FastAPI(title="Sistema de Ventas Pro - J4rly")
 
-# Creamos el motor de conexión
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+@app.get("/")
+def root():
+    return {"message": "SISTEMA ONLINE ✅", "database": "Memoria Volátil"}
 
-# Configuramos la fábrica de sesiones
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+@app.post("/products/", response_model=schemas.ProductOut)
+def create_product(product: schemas.ProductCreate):
+    return crud.create_product(product)
 
-# Clase base para crear tus tablas
-Base = declarative_base()
+@app.get("/products/", response_model=list[schemas.ProductOut])
+def read_products():
+    return crud.get_products()
