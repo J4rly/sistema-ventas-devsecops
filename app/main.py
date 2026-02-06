@@ -53,4 +53,4 @@ def create_product(product: ProductCreate):
 def read_products():
     """Obtiene la lista de productos registrados en la sesión actual."""
     return crud.get_products()
-
+.
